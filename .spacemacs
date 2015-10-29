@@ -216,7 +216,37 @@ layers configuration. You are free to put any user code."
   (helm-mode +1)
   (cua-mode 1)
   (setq magit-git-executable "git")
-  (define-key helm-map (kbd "<tab>") 'helm-select-action))
+  (define-key helm-map (kbd "<tab>") 'helm-select-action)
+
+  (global-unset-key (kbd "C-k"))
+
+  (global-set-key (kbd "C-S-z") 'redo)
+  (global-set-key (kbd "C-s") 'save-buffer)
+  (global-set-key (kbd "C-S-s") 'write-file)
+  (global-set-key (kbd "C-s") 'save-buffer)
+  (global-set-key (kbd "C-S-s") 'write-file)
+  (global-set-key (kbd "C-w") 'kill-this-buffer)
+  (global-set-key (kbd "C-a") 'mark-whole-buffer)
+  (global-set-key (kbd "C-o") 'helm-find-files)
+  (global-set-key (kbd "C-<tab>") 'other-window)
+  (global-set-key (kbd "C-p") 'helm-M-x)
+  (global-set-key (kbd "M-x") 'helm-M-x)
+  (global-set-key (kbd "M-<f4>") 'kill-emacs)
+
+  (global-set-key (kbd "C-b") 'helm-mini)
+
+  (global-set-key (kbd "C-d") 'mc/mark-next-like-this)
+  (global-set-key (kbd "C-S-d") 'mc/skip-to-next-like-this)
+  (global-set-key (kbd "M-d") 'mc/edit-lines)
+
+  ;; isearch stuff
+  (global-set-key (kbd "C-f") 'isearch-forward)
+  (global-set-key (kbd "C-S-f") 'isearch-backward)
+  (add-hook 'isearch-mode-hook
+            (lambda ()
+              (define-key isearch-mode-map (kbd "C-f") 'isearch-repeat-forward)
+              (define-key isearch-mode-map (kbd "C-S-f") 'isearch-repeat-backward)
+              (define-key isearch-mode-map (kbd "C-v") 'isearch-yank-kill))))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
