@@ -194,6 +194,11 @@ values."
   "Initialization function for user code.
 It is called immediately after `dotspacemacs/init'.  You are free to put any
 user code."
+  (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
+  (add-to-list 'package-pinned-packages '(cider . "melpa-stable") t)
+  (add-to-list 'package-pinned-packages '(clj-refactor . "melpa-stable") t)
+  (add-to-list 'package-pinned-packages '(cljr-helm . "melpa-stable") t)
+  (add-to-list 'package-pinned-packages '(ac-cider . "melpa-stable") t)
   )
 
 (defun dotspacemacs/user-config ()
@@ -213,13 +218,17 @@ layers configuration. You are free to put any user code."
     (spacemacs/add-to-hooks (defun bb/no-scroll-margin ()
                               (setq-local scroll-margin 0))
                             comint-hooks))
+  (setq default-shell 'shell)
   (helm-mode +1)
   (cua-mode 1)
   (setq magit-git-executable "git")
   (define-key helm-map (kbd "<tab>") 'helm-select-action)
 
   (global-unset-key (kbd "C-k"))
+  (global-unset-key (kbd "C-r"))
+  (global-unset-key (kbd "C-z"))
 
+  (global-set-key (kbd "C-z") 'undo)
   (global-set-key (kbd "C-S-z") 'redo)
   (global-set-key (kbd "C-s") 'save-buffer)
   (global-set-key (kbd "C-S-s") 'write-file)
@@ -246,7 +255,16 @@ layers configuration. You are free to put any user code."
             (lambda ()
               (define-key isearch-mode-map (kbd "C-f") 'isearch-repeat-forward)
               (define-key isearch-mode-map (kbd "C-S-f") 'isearch-repeat-backward)
-              (define-key isearch-mode-map (kbd "C-v") 'isearch-yank-kill))))
+              (define-key isearch-mode-map (kbd "C-v") 'isearch-yank-kill)))
+
+  (require 'clojure-mode)
+  (define-key clojure-mode-map (kbd "C-e e") 'cider-eval-last-sexp)
+  (define-key clojure-mode-map (kbd "C-e f") 'cider-eval-defun-at-point)
+  (define-key clojure-mode-map (kbd "C-e b") 'cider-eval-buffer)
+
+  (define-key clojure-mode-map (kbd "C-r r") 'cljr-rename-symbol)
+  (define-key clojure-mode-map (kbd "C-r R") 'cljr-rename-file)
+  )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
