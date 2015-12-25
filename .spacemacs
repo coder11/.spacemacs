@@ -264,6 +264,8 @@ layers configuration. You are free to put any user code."
 
   (define-key clojure-mode-map (kbd "C-r r") 'cljr-rename-symbol)
   (define-key clojure-mode-map (kbd "C-r R") 'cljr-rename-file)
+
+  (define-key clojure-mode-map (kbd "<f6>") 'cider-refresh)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
