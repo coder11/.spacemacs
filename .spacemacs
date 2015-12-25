@@ -261,6 +261,7 @@ layers configuration. You are free to put any user code."
   (define-key clojure-mode-map (kbd "C-e e") 'cider-eval-last-sexp)
   (define-key clojure-mode-map (kbd "C-e f") 'cider-eval-defun-at-point)
   (define-key clojure-mode-map (kbd "C-e b") 'cider-eval-buffer)
+  (define-key clojure-mode-map (kbd "C-e r") 'cider-eval-last-sexp-and-replace)
 
   (define-key clojure-mode-map (kbd "C-r r") 'cljr-rename-symbol)
   (define-key clojure-mode-map (kbd "C-r R") 'cljr-rename-file)
