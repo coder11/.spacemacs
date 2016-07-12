@@ -30,6 +30,7 @@ values."
      emacs-lisp
      git
      markdown
+     html
      ;; org
      (shell :variables
             shell-default-height 30
@@ -44,7 +45,8 @@ values."
    ;; configuration in `dotspacemacs/config'.
    dotspacemacs-additional-packages '()
    ;; A list of packages and/or extensions that will not be install and loaded.
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages
+   '(smartparens)
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
    ;; are declared in a layer which is not a member of
    ;; the list `dotspacemacs-configuration-layers'. (default t)
@@ -205,6 +207,7 @@ user code."
   "Configuration function for user code.
  This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
+  (global-linum-mode)
   (let ((comint-hooks '(eshell-mode-hook
                         shell-mode-hook
                         term-mode-hook
@@ -267,6 +270,38 @@ layers configuration. You are free to put any user code."
   (define-key clojure-mode-map (kbd "C-r R") 'cljr-rename-file)
 
   (define-key clojure-mode-map (kbd "<f6>") 'cider-refresh)
+
+  (eval-after-load 'paredit
+    '(progn
+       (define-key paredit-mode-map (kbd "<C-right>") 'paredit-forward)
+       (define-key paredit-mode-map (kbd "<C-left>") 'paredit-backward)
+       (define-key paredit-mode-map (kbd "<C-down>") 'paredit-forward-down)
+       (define-key paredit-mode-map (kbd "<C-up>") 'paredit-backward-up)
+       (define-key paredit-mode-map (kbd "<M-right>") 'paredit-forward-slurp-sexp)
+       (define-key paredit-mode-map (kbd "<M-left>")  'paredit-forward-barf-sexp)))
+
+  (defun my/frame-create (&optional title)
+    "Create a new frame returning its internal id,
+   optionally setting TITLE as title"
+    (interactive "sNew frame name: ")
+    (progn
+      (setq my/frame-id (make-frame-command))
+      (set-frame-name title))
+    my/frame-id)
+
+  (defun prepare-cider-web-project ()
+    (interactive)
+    (projectile-dired)
+    (cider-jack-in)
+    (let ((frame-id (my/frame-create)))
+      (select-frame-set-input-focus frame-id)
+      (split-window-below)
+      (shell "lein-less")
+      (comint-send-string (get-buffer-process (current-buffer)) "lein less auto\n")
+      (other-window 1)
+      (shell "lein-figwheel")
+      (comint-send-string (get-buffer-process (current-buffer)) "lein figwheel\n")
+      ))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
