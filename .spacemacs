@@ -280,6 +280,9 @@ layers configuration. You are free to put any user code."
        (define-key paredit-mode-map (kbd "<M-right>") 'paredit-forward-slurp-sexp)
        (define-key paredit-mode-map (kbd "<M-left>")  'paredit-forward-barf-sexp)))
 
+  (add-hook 'clojure-mode-hook 'enable-paredit-mode)
+  (add-hook 'clojure-mode-hook 'aggressive-indent-mode)
+
   (defun my/frame-create (&optional title)
     "Create a new frame returning its internal id,
    optionally setting TITLE as title"
