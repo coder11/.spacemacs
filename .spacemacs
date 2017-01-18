@@ -246,6 +246,9 @@ layers configuration. You are free to put any user code."
   (global-set-key (kbd "C-S-d") 'mc/skip-to-next-like-this)
   (global-set-key (kbd "M-d") 'mc/edit-lines)
 
+  (global-set-key (kbd "C-SPC SPC") 'avy-goto-word-1)
+  (global-set-key (kbd "C-SPC TAB") 'avy-goto-char-2)
+
   ;; isearch stuff
   (global-set-key (kbd "C-f") 'isearch-forward)
   (global-set-key (kbd "C-S-f") 'isearch-backward)
