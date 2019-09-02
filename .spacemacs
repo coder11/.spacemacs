@@ -282,6 +282,7 @@ layers configuration. You are free to put any user code."
   (add-hook 'clojure-mode-hook 'aggressive-indent-mode)
 
   (setq projectile-git-submodule-command nil)
+  (setq projectile-use-git-grep t)
 
   (defun my/frame-create (&optional title)
     "Create a new frame returning its internal id,
